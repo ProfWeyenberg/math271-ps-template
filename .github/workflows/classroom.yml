@@ -19,7 +19,10 @@ jobs:
           install.packages("pak", repos="https://r-lib.github.io/p/pak/devel/", lib=Sys.getenv("R_LIBS_USER"))
           .libPaths(Sys.getenv("R_LIBS_USER"))
           dir.create(".github", showWarnings=FALSE)
-          pak::lockfile_create(c("any::sessioninfo", "any::testthat", "any::rmarkdown"), lockfile=".github/pkg.lock")
+          reqs <- tryCatch(readLines("PACKAGES"), error=function(e) character())
+          reqs <- grep("^[^#]", grep("\\S", trimws(reqs), value=TRUE), value=TRUE)
+          core <- c("any::sessioninfo", "any::testthat", "any::rmarkdown")
+          pak::lockfile_create(c(core, reqs), lockfile=".github/pkg.lock")
       - name: cache R packages
         uses: pat-s/always-upload-cache@v2.1.5
         with: 
