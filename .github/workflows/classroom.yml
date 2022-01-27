@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: sudo apt-get update && sudo apt-get upgrade
       - name: Installing pak and building lockfile
         id: install
         shell: Rscript {0}
@@ -18,6 +17,7 @@ jobs:
           cat("::set-output name=lib-dir::", Sys.getenv("R_LIBS_USER"))
           dir.create(Sys.getenv("R_LIBS_USER"), showWarnings=FALSE, recursive=TRUE)
           install.packages("pak", repos="https://r-lib.github.io/p/pak/devel/", lib=Sys.getenv("R_LIBS_USER"))
+          pak::pkg_install("r-lib/rlang")
           .libPaths(Sys.getenv("R_LIBS_USER"))
           dir.create(".github", showWarnings=FALSE)
           reqs <- tryCatch(readLines("PACKAGES"), error=function(e) character())
