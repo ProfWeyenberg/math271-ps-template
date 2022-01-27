@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt-get install -y musl-dev 
       - name: Installing pak and building lockfile
         id: install
         shell: Rscript {0}
