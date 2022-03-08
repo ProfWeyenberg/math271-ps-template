@@ -1,2 +1,5 @@
-## execute all code in the solution file
-try(knitr::knit(text=readLines('PSxx_solution.Rmd')))
+solution_file <- Sys.glob('*_solution.Rmd') # or set to a fixed string
+
+test_that("Checking Solution Document",{
+  expect_error(knitr::knit(text=readLines(solution_file)), NA) ## solution knits without error
+})
