@@ -23,7 +23,7 @@ ol > li {
     padding:10px 80px; /* Add some spacing around the content */
     list-style:none; /* Disable the normal item numbering */
     border-top:2px solid #317EAC;
-    background:rgba(49, 126, 172, 0.1);
+    background: rgba(49, 126, 172, 0.1);
 }
 ol > li:before {
     content:"Exercise " counter(li); /* Use the counter as content */
@@ -59,14 +59,14 @@ hr {
     border: 1px solid #357FAA;
 }
 
-div.boxedtext {
+.boxedtext {
     background-color: rgba(86, 155, 189, 0.2);
     padding: 20px;
     margin-bottom: 20px;
     font-size: 10pt;
 }
 
-div.template {
+.template {
     margin-top: 30px;
     margin-bottom: 30px;
     color: #808080;
@@ -76,7 +76,7 @@ div.template {
     border-radius: 5px;
 }
 
-div.license { 
+.license { 
     margin-top: 30px;
     margin-bottom: 30px;
     color: #4C721D;
@@ -85,3 +85,34 @@ div.license {
     background-color: rgba(76, 114, 29, 0.2);
     border-radius: 5px;
 }
+
+/* Code below here is connected to the new UH Hilo style theme */
+#section-header, #header {
+  background-color: #b60101;
+  color: white;
+  border-bottom: 3px solid black;
+  padding: 5px;
+}
+body{
+  background-color: #e3dcca;
+}
+.main-container{
+  background-color: white;
+}
+h2 {
+  color: #b60101;
+  border-bottom: 2px solid;
+}
+.r, .yaml, .list-group-item {
+   background-color: #faf9f5;
+ }
+ .list-group-item.active {
+   background-color: #b60101;
+ }
+ .list-group-item.active:hover {
+   background-color: #d52b1e;
+ }
+ #TOC {
+   border-color: #f0eee4;
+ }
+ 
