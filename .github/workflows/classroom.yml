@@ -7,34 +7,14 @@ jobs:
     name: Autograding
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Installing pak and building lockfile
-        id: install
-        shell: Rscript {0}
-        run: |
-          cat("::set-output name=os-version::", sessionInfo()$running, "\n", sep = "")
-          cat("::set-output name=r-version::", if (grepl("development", rv <- R.Version()$version.string)) as.character(getRversion()) else rv, "\n", sep = "")
-          cat("::set-output name=lib-dir::", Sys.getenv("R_LIBS_USER"))
-          dir.create(Sys.getenv("R_LIBS_USER"), showWarnings=FALSE, recursive=TRUE)
-          install.packages("pak", repos="https://r-lib.github.io/p/pak/devel/", lib=Sys.getenv("R_LIBS_USER"))
-          .libPaths(Sys.getenv("R_LIBS_USER"))
-          dir.create(".github", showWarnings=FALSE)
-          reqs <- tryCatch(readLines("PACKAGES"), error=function(e) character())
-          reqs <- grep("^[^#]", grep("\\S", trimws(reqs), value=TRUE), value=TRUE)
-          core <- c("any::sessioninfo", "any::testthat", "any::rmarkdown")
-          pak::lockfile_create(c(core, reqs), lockfile=".github/pkg.lock")
-      - name: cache R packages
-        uses: pat-s/always-upload-cache@v2.1.5
-        with: 
-          path: |
-            ${{ steps.install.outputs.lib-dir }}/*
-            !${{ steps.install.outputs.lib-dir }}/pak
-          key: ${{ steps.install.outputs.os-version }}-${{ steps.install.outputs.r-version }}-${{ hashFiles('.github/pkg.lock') }}-4
-          restore-keys: |
-            ${{ steps.install.outputs.os-version }}-${{ steps.install.outputs.r-version }}-
-      - name: Install dependencies
-        shell: Rscript {0}
-        run: |
-          pak::lockfile_install(".github/pkg.lock")
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::sessioninfo
+            any::testthat
+            any::rmarkdown
       - uses: education/autograding@v1
         
