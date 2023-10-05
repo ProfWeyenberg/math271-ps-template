@@ -2,7 +2,7 @@
   "tests": [
     {
       "name": "script autograder.R",
-      "run": "Rscript .github/autograder.R",
+      "run": "R_LIBS_USER=/home/runner/work/_temp/Library Rscript .github/autograder.R",
       "timeout": 5,
       "points": 1
     }
