@@ -1,12 +1,8 @@
 {
   "tests": [
     {
-      "name": "testthat",
-      "setup": "",
+      "name": "script autograder.R",
       "run": "Rscript .github/autograder.R",
-      "input": "",
-      "output": "",
-      "comparison": "included",
       "timeout": 5,
       "points": 1
     }
