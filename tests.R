@@ -1,4 +1,4 @@
-solution_file <- Sys.glob('*_solution.Rmd') # or set to a fixed string
+solution_file <- fs::dir_ls(glob="*solution.Rmd", ignore.case=TRUE) # or set to a fixed string
 
 test_that("Checking Solution Document",{
   expect_gt(length(solution_file), 0)

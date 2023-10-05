@@ -1,10 +1,16 @@
 {
   "tests": [
     {
+      "name": "Check for solution file"
+      "run": "find . -maxdepth 1 -iname '*solution.Rmd' | grep ."
+      "timeout": 1,
+      "points": 1
+    },
+    {
       "name": "script autograder.R",
       "run": "R_LIBS_USER=/home/runner/work/_temp/Library Rscript .github/autograder.R",
       "timeout": 5,
-      "points": 1
+      "points": 9
     }
   ]
 }
