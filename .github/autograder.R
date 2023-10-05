@@ -1,1 +1,1 @@
-testthat::test_file("tests.R", reporter=c("list", "fail"))
+testthat::test_file("tests.R", reporter=c("compactProgress", "fail"))
