@@ -16,5 +16,12 @@ jobs:
             any::sessioninfo
             any::testthat
             any::rmarkdown
+      - name: Inspect library 
+        run: |
+          .libPaths()
+          .Library.site
+          Sys.getenv()
+          installed.packages()[,c("Package", "Version")]
+        shell: Rscript {0} 
       - uses: education/autograding@v1
         
