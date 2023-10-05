@@ -1,7 +1,7 @@
 solution_file <- Sys.glob('*_solution.Rmd') # or set to a fixed string
 
 test_that("Checking Solution Document",{
-  tryCatch(expect_gt(length(solution_file), 0), error=warning)
+  expect_gt(length(solution_file), 0)
   for(fn in solution_file)
     expect_no_error(knitr::knit(text=readLines(fn)))
 })
