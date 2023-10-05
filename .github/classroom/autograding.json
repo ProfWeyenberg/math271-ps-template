@@ -1,8 +1,8 @@
 {
   "tests": [
     {
-      "name": "Check for solution file"
-      "run": "find . -maxdepth 1 -iname '*solution.Rmd' | grep ."
+      "name": "Check for solution file",
+      "run": "find . -maxdepth 1 -iname '*solution.Rmd' | grep .",
       "timeout": 1,
       "points": 1
     },
