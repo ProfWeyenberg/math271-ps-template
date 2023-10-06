@@ -39,9 +39,9 @@ jobs:
               as.data.frame() %>% 
               tidyr::separate_wider_regex(test, c("<?", points="[0-9]*", ">?", name=".*")) %>%
               dplyr::transmute(name, points=as.integer(points), run=ifelse(failed, "false", "true"), 
-                        setup=sapply(result, function(.x) paste(lapply(.x, as.character), 
-                                                                collapse="\n")) %>% 
-                              paste0("echo -n '", trimws(.), "'")) %>% 
+                        setup=sapply(result, function(.x) trimws(paste(lapply(.x, as.character), 
+                                                                collapse="\n"))) %>% 
+                              paste0("echo -n '", ., "'")) %>% 
               list(tests=.) %>% jsonlite::toJSON() %>% write(fp)
         shell: Rscript {0}
       - run: cat .github/classroom/autograding.json
