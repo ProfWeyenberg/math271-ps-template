@@ -1,8 +1,8 @@
-test_that("Knitting solution markdown",{
+test_that("<5>Solution file exists and knits",{
   expect_true(file.exists("solution.Rmd"))
-  expect_no_error(suppressWarnings(knitr::knit("solution.Rmd", quiet = TRUE, envir=globalenv())))
+  suppressWarnings(expect_error(knitr::knit("solution.Rmd", quiet = TRUE), NA))
 })
 
-test_that("Question 1",{
+test_that("<12>Question 1",{
   expect_true(TRUE)
 })
