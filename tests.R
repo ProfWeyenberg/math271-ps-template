@@ -1,9 +1,8 @@
-solution_file <- fs::dir_ls(glob="*solution.Rmd", ignore.case=TRUE)
+test_that("Knitting solution.Rmd",{
+  expect_true(file.exists("solution.Rmd"))
+  expect_no_error(knitr::knit("solution.Rmd", quiet = TRUE, envir=globalenv()))
+})
 
-test_that("Checking Solution Document",{
+test_that("Question 1",{
   expect_true(TRUE)
-  expect_gt(length(solution_file), 0)
-  #if(length(solution_file) == 0L) warning("No solution files found.")
-  for(fn in solution_file)
-    expect_no_error(knitr::knit(text=readLines(fn)))
 })

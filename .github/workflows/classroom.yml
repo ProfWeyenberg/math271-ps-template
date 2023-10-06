@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - id: packages
+        run: | 
+            echo 'deps<<EOF' >> "$GITHUB_OUTPUT"
+            cat PACKAGES | grep -v ^# >> "$GITHUB_OUTPUT"
+            echo 'EOF' >> "$GITHUB_OUTPUT"
       - uses: r-lib/actions/setup-r@v2
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -15,11 +20,12 @@ jobs:
             any::sessioninfo
             any::testthat
             any::rmarkdown
+            ${{ steps.packages.outputs.deps }}
       - name: Execute tests.R
         run: |
           capture.output(
             testthat::test_file("tests.R", reporter="tap"),
-            file = "autograder.out", 
+            file = "autograder.tap", 
             split = TRUE)
         shell: Rscript {0}
       - uses: education/autograding@v1
