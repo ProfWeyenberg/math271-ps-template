@@ -7,13 +7,13 @@
       "points": 1
     }, 
     {
-      "name": "Autopass test"
-      "run": "grep -q '^ok 1' autograder.out"
+      "name": "Autopass test",
+      "run": "grep -q '^ok 1' autograder.out",
       "points": 1
     },
     { 
-      "name": "Solution file exists"
-      "run": "grep -q '^ok 2' autograder.out"
+      "name": "Solution file exists",
+      "run": "grep -q '^ok 2' autograder.out",
       "points": 1
     }
   ]
