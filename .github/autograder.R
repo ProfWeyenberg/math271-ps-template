@@ -1,1 +1,4 @@
-testthat::test_file("tests.R", reporter=c("compactProgress", "fail"))
+capture.output(
+  testthat::test_file("tests.R", reporter="tap"),
+  file = "autograder.out", 
+  split = TRUE)
