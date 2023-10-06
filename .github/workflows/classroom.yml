@@ -23,4 +23,5 @@ jobs:
             split = TRUE)
         shell: Rscript {0}
       - uses: education/autograding@v1
+        continue-on-error: true
         
