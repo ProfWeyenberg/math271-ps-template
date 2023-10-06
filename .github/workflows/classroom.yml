@@ -44,7 +44,6 @@ jobs:
                               paste0("echo -n '", ., "'")) %>% 
               list(tests=.) %>% jsonlite::toJSON() %>% write(fp)
         shell: Rscript {0}
-      - run: cat .github/classroom/autograding.json
       - name: Github Classroom autograder
         uses: education/autograding@v1
         continue-on-error: true
