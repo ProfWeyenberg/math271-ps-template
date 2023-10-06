@@ -1,12 +1,6 @@
 {
   "tests": [
     {
-      "name": "script autograder.R",
-      "run": "R_LIBS_USER=/home/runner/work/_temp/Library Rscript .github/autograder.R",
-      "timeout": 5,
-      "points": 1
-    }, 
-    {
       "name": "Autopass test",
       "run": "grep -q '^ok 1' autograder.out",
       "points": 1

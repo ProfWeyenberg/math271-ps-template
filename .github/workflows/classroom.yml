@@ -15,6 +15,12 @@ jobs:
             any::sessioninfo
             any::testthat
             any::rmarkdown
+      - name: Execute tests.R
+        run: |
+          capture.output(
+            testthat::test_file("tests.R", reporter="tap"),
+            file = "autograder.out", 
+            split = TRUE)
+        shell: Rscript {0}
       - uses: education/autograding@v1
-        continue-on-error: true
         
