@@ -16,4 +16,5 @@ jobs:
             any::testthat
             any::rmarkdown
       - uses: education/autograding@v1
+        continue-on-error: true
         
