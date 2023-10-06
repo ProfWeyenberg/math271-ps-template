@@ -20,6 +20,8 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
+            dplyr
+            jsonlite
             magrittr
             sessioninfo
             testthat
@@ -34,8 +36,8 @@ jobs:
             dir.create(dirname(fp))
             testthat::test_file("tests.R", reporter="tap") %>%
               as.data.frame() %>% 
-              separate_wider_regex(test, c("<?", points="[0-9]*", ">?", name=".*")) %>%
-              transmute(name, points=as.integer(points), run=!as.logical(failed), 
+              tidyr::separate_wider_regex(test, c("<?", points="[0-9]*", ">?", name=".*")) %>%
+              dplyr::transmute(name, points=as.integer(points), run=!as.logical(failed), 
                         setup=sapply(result, function(.x) paste(lapply(.x, as.character), 
                                                                 collapse="\n")) %>% 
                         paste0("echo -e '", ., "'")) %>% 
