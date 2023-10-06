@@ -41,7 +41,7 @@ jobs:
               dplyr::transmute(name, points=as.integer(points), run=ifelse(failed, "false", "true"), 
                         setup=sapply(result, function(.x) paste(lapply(.x, as.character), 
                                                                 collapse="\n")) %>% 
-                              paste0("echo '", ., "'")) %>% 
+                              paste0("echo -n '", trimws(.), "'")) %>% 
               list(tests=.) %>% jsonlite::toJSON() %>% write(fp)
         shell: Rscript {0}
       - run: cat .github/classroom/autograding.json
