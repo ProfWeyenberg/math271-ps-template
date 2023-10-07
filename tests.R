@@ -6,3 +6,7 @@ test_that("<5>Solution file exists and knits",{
 test_that("<12>Question 1",{
   expect_true(TRUE)
 })
+
+test_that("This test has no points", {
+  expect_true(TRUE)
+})
