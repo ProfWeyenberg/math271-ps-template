@@ -47,7 +47,7 @@ jobs:
               tidyr::separate_wider_regex(test_results, test, separate_regex),
               name, points=as.integer(points), run=tolower(!failed),
               setup=paste0("echo -n '", sapply(result,format_result), "'"))
-            write(fp, jsonlite::toJSON(list(tests=output_df)))
+            write(jsonlite::toJSON(list(tests=output_df)), fp)
             cat(::endgroup::)
             cat("::group::Generated autograding.json")
             writeLines(jsonlite::prettify(readr::read_file(fp)))
