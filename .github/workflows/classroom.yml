@@ -33,10 +33,10 @@ jobs:
       - name: Execute tests.R
         run: |
             # Execute tests.R
-            cat("::group::Running tests")
+            cat("::group::Running tests\n")
             test_results <- as.data.frame(testthat::test_file("tests.R"))
-            cat("::endgroup::")
-            cat("::group::Writing autograding.json")
+            cat("::endgroup::\n")
+            cat("::group::Writing autograding.json\n")
             fp <- file.path(".github", "classroom", "autograding.json")
             dir.create(dirname(fp))
             separate_regex <- c("<?", points="[0-9]*", ">?", name=".*")
@@ -48,10 +48,10 @@ jobs:
               name, points=as.integer(points), run=tolower(!failed),
               setup=paste0("echo -n '", sapply(result,format_result), "'"))
             write(jsonlite::toJSON(list(tests=output_df)), fp)
-            cat("::endgroup::")
-            cat("::group::Generated autograding.json")
+            cat("::endgroup::\n")
+            cat("::group::Generated autograding.json\n")
             writeLines(jsonlite::prettify(readr::read_file(fp)))
-            cat("::endgroup::")
+            cat("::endgroup::\n")
         shell: Rscript {0}
       - name: Github Classroom autograder
         uses: education/autograding@v1
