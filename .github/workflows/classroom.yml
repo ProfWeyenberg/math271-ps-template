@@ -32,17 +32,26 @@ jobs:
             ${{ steps.packages.outputs.deps }}
       - name: Execute tests.R
         run: |
-            library(magrittr)
+            # Execute tests.R
+            cat("::group::Running tests")
+            test_results <- as.data.frame(testthat::test_file("tests.R"))
+            cat("::endgroup::")
+            cat("::group::Writing autograding.json")
             fp <- file.path(".github", "classroom", "autograding.json")
             dir.create(dirname(fp))
-            testthat::test_file("tests.R") %>%
-              as.data.frame() %>% 
-              tidyr::separate_wider_regex(test, c("<?", points="[0-9]*", ">?", name=".*")) %>%
-              dplyr::transmute(name, points=as.integer(points), run=ifelse(failed, "false", "true"), 
-                        setup=sapply(result, function(.x) trimws(paste(lapply(.x, as.character), 
-                                                                collapse="\n"))) %>% 
-                              paste0("echo -n '", ., "'")) %>% 
-              list(tests=.) %>% jsonlite::toJSON() %>% write(fp)
+            separate_regex <- c("<?", points="[0-9]*", ">?", name=".*")
+            format_result <- function(res){
+              trimws(paste(lapply(res, as.character), collapse="\n"))
+            }
+            output_df <- dplyr::transmute(
+              tidyr::separate_wider_regex(test_results, test, separate_regex),
+              name, points=as.integer(points), run=tolower(!failed),
+              setup=paste0("echo -n '", sapply(result,format_result), "'"))
+            write(fp, jsonlite::toJSON(list(tests=output_df)))
+            cat(::endgroup::)
+            cat("::group::Generated autograding.json")
+            writeLines(jsonlite::prettify(readr::read_file(fp)))
+            cat("::endgroup::")
         shell: Rscript {0}
       - name: Github Classroom autograder
         uses: education/autograding@v1
