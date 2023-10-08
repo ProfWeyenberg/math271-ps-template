@@ -25,6 +25,7 @@ jobs:
             jsonlite
             testthat
             readr
+            rmarkdown
             tidyr
             ${{ steps.packages.outputs.deps }}
       - name: Execute tests.R
