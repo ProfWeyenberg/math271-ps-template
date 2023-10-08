@@ -23,12 +23,9 @@ jobs:
           packages: |
             dplyr
             jsonlite
-            magrittr
-            sessioninfo
             testthat
             readr
             tidyr
-            rmarkdown
             ${{ steps.packages.outputs.deps }}
       - name: Execute tests.R
         run: |
