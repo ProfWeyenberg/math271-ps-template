@@ -39,7 +39,7 @@ jobs:
             dir.create(dirname(fp))
             separate_regex <- c("<?", points="[0-9]*", ">?", name=".*")
             format_result <- function(res){
-              trimws(paste(lapply(res, as.character), collapse="\n"))
+              trimws(paste(lapply(res, format), collapse="\n"))
             }
             output_df <- dplyr::transmute(
               tidyr::separate_wider_regex(test_results, test, separate_regex),
