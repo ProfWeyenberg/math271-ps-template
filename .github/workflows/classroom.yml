@@ -10,7 +10,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Read PACKAGES file
         id: packages
-        run: | 
+        run: |
+            # Parse PACKAGE file requirements
             echo 'deps<<EOF' >> "$GITHUB_OUTPUT"
             grep -v ^# PACKAGES >> "$GITHUB_OUTPUT" || true
             echo 'EOF' >> "$GITHUB_OUTPUT"
@@ -24,9 +25,8 @@ jobs:
             dplyr
             jsonlite
             testthat
-            readr
             rmarkdown
-            tidyr
+            stringr
             ${{ steps.packages.outputs.deps }}
       - name: Execute tests.R
         run: |
@@ -37,18 +37,17 @@ jobs:
             cat("::group::Writing autograding.json\n")
             fp <- file.path(".github", "classroom", "autograding.json")
             dir.create(dirname(fp))
-            separate_regex <- c("<?", points="[0-9]*", ">?", name=".*")
             format_result <- function(res){
-              trimws(paste(lapply(res, format), collapse="\n"))
+              trimws(paste(lapply(res, format), collapse="\n\n"))
             }
             output_df <- dplyr::transmute(
-              tidyr::separate_wider_regex(test_results, test, separate_regex),
-              name, points=as.integer(points), run=tolower(!failed),
-              setup=paste0("echo -n '", sapply(result,format_result), "'"))
+              test_results, name=test, run=tolower(!failed),
+              points=as.integer(str_extract(test, "^<(\\d+)>", group=1)),
+              setup=paste0("echo -n '", sapply(result, format_result), "'"))
             write(jsonlite::toJSON(list(tests=output_df)), fp)
             cat("::endgroup::\n")
-            cat("::group::Generated autograding.json\n")
-            writeLines(jsonlite::prettify(readr::read_file(fp)))
+            cat("::group::Show generated autograding.json\n")
+            writeLines(jsonlite::prettify(paste(readLines(fp), collapse="\n")))
             cat("::endgroup::\n")
         shell: Rscript {0}
       - name: Github Classroom autograder
