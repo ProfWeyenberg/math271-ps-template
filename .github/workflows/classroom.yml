@@ -42,7 +42,7 @@ jobs:
             }
             output_df <- dplyr::transmute(
               test_results, name=test, run=tolower(!failed),
-              points=as.integer(str_extract(test, "^<(\\d+)>", group=1)),
+              points=as.integer(stringr::str_extract(test, "^<(\\d+)>", group=1)),
               setup=paste0("echo -n '", sapply(result, format_result), "'"))
             write(jsonlite::toJSON(list(tests=output_df)), fp)
             cat("::endgroup::\n")
